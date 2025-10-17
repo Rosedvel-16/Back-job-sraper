@@ -5,15 +5,12 @@ FROM python:3.10-slim
 
 # ==============================================================================
 # Fase 2: Instalación de TODO en un solo paso (Más eficiente)
-# Se combinan la instalación de dependencias, la clave de Chrome y Chrome mismo.
-# La lista de librerías ha sido actualizada para ser compatible con repositorios modernos.
 # ==============================================================================
 RUN apt-get update && apt-get install -y --no-install-recommends \
     # Herramientas necesarias para añadir el repositorio de Chrome
     wget \
     gnupg \
     # --- LISTA DE LIBRERÍAS ACTUALIZADA Y CORRECTA ---
-    # Estas son las dependencias que Chrome necesita para ejecutarse
     libnss3 \
     libdbus-glib-1-2 \
     libgtk-3-0 \
@@ -49,6 +46,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # ==============================================================================
-# Fase 6: Comando de Inicio
+# Fase 6: Comando de Inicio (CON TIMEOUT AUMENTADO)
 # ==============================================================================
-CMD gunicorn --bind 0.0.0.0:$PORT app:app
+# Le damos 120 segundos (2 minutos) de paciencia al trabajador antes de cancelarlo.
+CMD gunicorn --bind 0.0.0.0:$PORT --timeout 120 app:app

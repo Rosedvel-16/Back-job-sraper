@@ -1,0 +1,12 @@
+# Scraping
+selenium
+beautifulsoup4
+webdriver-manager
+pandas
+lxml
+unidecode
+
+# Servidor Web (API)
+Flask
+Flask-Cors
+gunicorn

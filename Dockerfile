@@ -4,33 +4,31 @@
 FROM python:3.10-slim
 
 # ==============================================================================
-# Fase 2: Instalación de Dependencias del Sistema (Google Chrome)
+# Fase 2: Instalación de TODO en un solo paso (Más eficiente)
+# Se combinan la instalación de dependencias, la clave de Chrome y Chrome mismo.
+# La lista de librerías ha sido actualizada para ser compatible con repositorios modernos.
 # ==============================================================================
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    # Herramientas necesarias para añadir el repositorio de Chrome
     wget \
     gnupg \
+    # --- LISTA DE LIBRERÍAS ACTUALIZADA Y CORRECTA ---
+    # Estas son las dependencias que Chrome necesita para ejecutarse
+    libnss3 \
+    libdbus-glib-1-2 \
+    libgtk-3-0 \
+    libx11-xcb1 \
+    libasound2 \
+    libxtst6 \
+    libxss1 \
+    libfontconfig1 \
+    libdbus-1-3 \
+    # Proceso para instalar Google Chrome
     && mkdir -p /etc/apt/keyrings/ \
     && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg \
     && echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
     && apt-get update \
-    && apt-get install -y google-chrome-stable
-
-# ==============================================================================
-# Fase 2.5: Instalar LIBRERÍAS ADICIONALES para que Chrome funcione
-# ESTA ES LA SOLUCIÓN AL ERROR 127
-# ==============================================================================
-RUN apt-get install -y --no-install-recommends \
-    libglib2.0-0 \
-    libnss3 \
-    libgconf-2-4 \
-    libgdk-pixbuf2.0-0 \
-    libgtk-3-0 \
-    libx11-xcb1 \
-    libdbus-glib-1-2 \
-    libxtst6 \
-    libxt6 \
-    libxss1 \
-    libxrandr2 \
+    && apt-get install -y google-chrome-stable \
     # Limpieza final para reducir el tamaño de la imagen
     && rm -rf /var/lib/apt/lists/*
 

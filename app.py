@@ -9,7 +9,6 @@ CORS(app)
 def search_jobs():
     print("Petición recibida en /api/search")
 
-    # Capturamos TODOS los filtros del frontend
     cargo = request.args.get('cargo', default='', type=str)
     distrito = request.args.get('distrito', default='', type=str)
     sueldo_min = request.args.get('sueldo_min', default=None, type=int)

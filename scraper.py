@@ -29,7 +29,6 @@ def iniciar_driver():
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--disable-gpu")
     # Para entornos como Colab o Docker, a veces se necesita especificar la ubicación
-    # Si ejecutas localmente en Windows/Mac, esta línea puede no ser necesaria.
     # chrome_options.binary_location = "/usr/bin/google-chrome"
     chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
     chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
